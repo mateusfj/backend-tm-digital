@@ -6,7 +6,7 @@ type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 interface Response {
   status: number;
   description: string;
-  type?: Type<any>;
+  type: Type<any>;
 }
 
 interface QueryParamSchema {
@@ -38,7 +38,7 @@ export function SwaggerDocs(options: SwaggerDocsOptions) {
       decorators.push(
         ApiQuery({
           name: param.name,
-          required: param.required ?? false,
+          required: false,
           type: param.type,
           enum: param.enum,
         }),

@@ -1,18 +1,12 @@
+import { LeadStatus } from 'src/common/enums/lead-status';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export enum LeadStatus {
-  NEW = 'new',
-  INITIAL_CONTACT = 'initial_contact',
-  NEGOTIATING = 'negotiating',
-  CONVERTED = 'converted',
-  LOST = 'lost',
-}
 
 @Entity('leads')
 export class Lead {
@@ -41,8 +35,11 @@ export class Lead {
   email: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at?: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at?: Date;
+
+  @DeleteDateColumn()
+  deleted_at?: Date;
 }
