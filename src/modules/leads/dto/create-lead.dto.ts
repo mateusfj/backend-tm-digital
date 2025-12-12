@@ -106,8 +106,3 @@ export class LeadResponseDto {
   })
   city?: string;
 }
-
-export class LeadListResponseDto {
-  @ApiProperty({ type: [LeadResponseDto] })
-  leads: LeadResponseDto[];
-}

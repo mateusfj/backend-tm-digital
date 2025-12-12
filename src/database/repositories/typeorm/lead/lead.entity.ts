@@ -4,9 +4,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Property } from '../properties/properties.entity';
 
 @Entity('leads')
 export class Lead {
@@ -42,4 +44,7 @@ export class Lead {
 
   @DeleteDateColumn()
   deleted_at?: Date;
+
+  @OneToMany(() => Property, (property: Property): Lead => property.lead)
+  properties?: Property[];
 }
