@@ -4,7 +4,6 @@ import { GetPropertyUseCase } from './use-cases/get-property/get.property.usecas
 import { DeletePropertyUseCase } from './use-cases/delete-property/delete.property.usecase';
 import { UpdatePropertyUseCase } from './use-cases/update-property/update.property.usecase';
 import { ListPropertiesUseCase } from './use-cases/list-properties/list.properties.usecase';
-import { ListPropertiesByLeadUseCase } from './use-cases/list-properties-by-lead/list.properties.by.lead.usecase';
 import { PROPERTY_REPOSITORY_INTERFACE } from 'src/database/repositories/typeorm/properties/properties.interface';
 import { Provider } from '@nestjs/common';
 import { LeadRepository } from 'src/database/repositories/typeorm/lead/lead.repository';
@@ -56,13 +55,6 @@ export const PROPERTIES_PROVIDERS: Provider[] = [
     provide: ListPropertiesUseCase,
     useFactory: (propertyRepository: PropertyRepository) => {
       return new ListPropertiesUseCase(propertyRepository);
-    },
-    inject: [PROPERTY_REPOSITORY_INTERFACE],
-  },
-  {
-    provide: ListPropertiesByLeadUseCase,
-    useFactory: (propertyRepository: PropertyRepository) => {
-      return new ListPropertiesByLeadUseCase(propertyRepository);
     },
     inject: [PROPERTY_REPOSITORY_INTERFACE],
   },

@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository, FindOptionsWhere } from 'typeorm';
 import { Property } from './properties.entity';
 
 import { PropertyRepositoryInterface } from './properties.interface';
+import type { ListPropertiesQueryDto } from 'src/modules/properties/dto/list-properties.query.dto';
 
 @Injectable()
 export class PropertyRepository implements PropertyRepositoryInterface {
@@ -12,13 +13,6 @@ export class PropertyRepository implements PropertyRepositoryInterface {
     private readonly propertyRepository: Repository<Property>,
   ) {}
 
-  async findPropertiesByLead(leadId: string): Promise<Property[]> {
-    const properties: Property[] = await this.propertyRepository.find({
-      where: { lead_id: leadId },
-    });
-    return properties;
-  }
-
   async create(data: Property): Promise<Property> {
     const property = await this.propertyRepository.save(data);
     return property;
@@ -26,6 +20,38 @@ export class PropertyRepository implements PropertyRepositoryInterface {
 
   async findAll(): Promise<Property[]> {
     const properties: Property[] = await this.propertyRepository.find({
+      relations: ['lead'],
+      select: {
+        lead: {
+          id: true,
+          name: true,
+        },
+      },
+    });
+    return properties;
+  }
+
+  async findAllWithFilters(query: ListPropertiesQueryDto): Promise<Property[]> {
+    const where: FindOptionsWhere<Property> = {};
+
+    if (query.lead_id) {
+      where.lead_id = query.lead_id;
+    }
+
+    if (query.municipality) {
+      where.municipality = query.municipality;
+    }
+
+    if (query.crop) {
+      where.crop = query.crop;
+    }
+
+    if (query.search) {
+      where.name = ILike(`%${query.search.trim()}%`);
+    }
+
+    const properties: Property[] = await this.propertyRepository.find({
+      where,
       relations: ['lead'],
       select: {
         lead: {

@@ -1,3 +1,4 @@
+import { Crop } from 'src/common/enums/crop';
 import {
   CreatePropertyDto,
   PropertyResponseDto,
@@ -62,21 +63,24 @@ export const PROPERTY_SCHEMA = {
     method: 'get' as const,
     summary: 'List all properties',
     description: 'Endpoint to retrieve all properties in the system.',
-    response: [
+    queryParams: [
       {
-        status: 200,
-        description: 'properties retrieved successfully',
-        type: PropertyResponseDto,
-        isArray: true,
+        name: 'search',
+        type: String,
+      },
+      {
+        name: 'crop',
+        enum: Object.values(Crop),
+      },
+      {
+        name: 'lead_id',
+        type: String,
+      },
+      {
+        name: 'municipality',
+        type: String,
       },
     ],
-  },
-
-  list_properties_by_lead: {
-    method: 'get' as const,
-    summary: 'List properties by lead',
-    description:
-      'Endpoint to retrieve all properties associated with a specific lead.',
     response: [
       {
         status: 200,

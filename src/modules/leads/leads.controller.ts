@@ -18,6 +18,8 @@ import { ListLeadsUseCase } from './use-cases/list-leads/list.leads.usecase';
 import { Lead } from 'src/database/repositories/typeorm/lead/lead.entity';
 import { LEAD_SCHEMA } from 'src/swagger/schema/lead.schema';
 import { SwaggerDocs } from 'src/common/decorators/swagger.decorator';
+import { Query } from '@nestjs/common';
+import { ListLeadsQueryDto } from './dto/list-leads.query.dto';
 
 @Controller('leads')
 export class LeadsController {
@@ -37,8 +39,8 @@ export class LeadsController {
 
   @SwaggerDocs(LEAD_SCHEMA.list_leads)
   @Get()
-  findAll(): Promise<Lead[]> {
-    return this.listLeadsUseCase.execute();
+  findAll(@Query() query: ListLeadsQueryDto): Promise<Lead[]> {
+    return this.listLeadsUseCase.execute(query);
   }
 
   @SwaggerDocs(LEAD_SCHEMA.get_lead)

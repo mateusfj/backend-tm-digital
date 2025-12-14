@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, ILike, Repository } from 'typeorm';
 import { Lead } from './lead.entity';
-
 import { LeadRepositoryInterface } from './lead.interface';
+import type { ListLeadsQueryDto } from 'src/modules/leads/dto/list-leads.query.dto';
 
 @Injectable()
 export class LeadRepository implements LeadRepositoryInterface {
@@ -26,6 +26,26 @@ export class LeadRepository implements LeadRepositoryInterface {
 
   async findAll(): Promise<Lead[]> {
     const leads: Lead[] = await this.leadRepository.find();
+    return leads;
+  }
+
+  async findAllWithFilters(query: ListLeadsQueryDto): Promise<Lead[]> {
+    const where: FindOptionsWhere<Lead> = {};
+
+    if (query.status) {
+      where.status = query.status;
+    }
+
+    if (query.municipality) {
+      where.city = query.municipality;
+    }
+
+    if (query.search) {
+      where.name = ILike(`%${query.search.trim()}%`);
+    }
+
+    const leads: Lead[] = await this.leadRepository.find({ where });
+
     return leads;
   }
 

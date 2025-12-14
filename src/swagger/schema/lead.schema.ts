@@ -1,3 +1,4 @@
+import { LeadStatus } from 'src/common/enums/lead-status';
 import {
   CreateLeadDto,
   LeadResponseDto,
@@ -62,6 +63,20 @@ export const LEAD_SCHEMA = {
     method: 'get' as const,
     summary: 'List all leads',
     description: 'Endpoint to retrieve all leads in the system.',
+    queryParams: [
+      {
+        name: 'search',
+        type: String,
+      },
+      {
+        name: 'status',
+        enum: Object.values(LeadStatus),
+      },
+      {
+        name: 'municipality',
+        type: String,
+      },
+    ],
     response: [
       {
         status: 200,

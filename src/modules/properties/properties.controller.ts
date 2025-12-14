@@ -15,10 +15,11 @@ import { GetPropertyUseCase } from './use-cases/get-property/get.property.usecas
 import { DeletePropertyUseCase } from './use-cases/delete-property/delete.property.usecase';
 import { UpdatePropertyUseCase } from './use-cases/update-property/update.property.usecase';
 import { ListPropertiesUseCase } from './use-cases/list-properties/list.properties.usecase';
-import { ListPropertiesByLeadUseCase } from './use-cases/list-properties-by-lead/list.properties.by.lead.usecase';
 import { Property } from 'src/database/repositories/typeorm/properties/properties.entity';
 import { PROPERTY_SCHEMA } from 'src/swagger/schema/property.schema';
 import { SwaggerDocs } from 'src/common/decorators/swagger.decorator';
+import { Query } from '@nestjs/common';
+import { ListPropertiesQueryDto } from './dto/list-properties.query.dto';
 
 @Controller('properties')
 export class PropertiesController {
@@ -28,7 +29,6 @@ export class PropertiesController {
     private readonly deletePropertyUseCase: DeletePropertyUseCase,
     private readonly updatePropertyUseCase: UpdatePropertyUseCase,
     private readonly listPropertiesUseCase: ListPropertiesUseCase,
-    private readonly listPropertiesByLeadUseCase: ListPropertiesByLeadUseCase,
   ) {}
 
   @SwaggerDocs(PROPERTY_SCHEMA.create)
@@ -39,16 +39,8 @@ export class PropertiesController {
 
   @SwaggerDocs(PROPERTY_SCHEMA.list_properties)
   @Get()
-  findAll(): Promise<Property[]> {
-    return this.listPropertiesUseCase.execute();
-  }
-
-  @SwaggerDocs(PROPERTY_SCHEMA.list_properties_by_lead)
-  @Get('lead/:leadId')
-  findByLead(
-    @Param('leadId', new ParseUUIDPipe()) leadId: string,
-  ): Promise<Property[]> {
-    return this.listPropertiesByLeadUseCase.execute(leadId);
+  findAll(@Query() query: ListPropertiesQueryDto): Promise<Property[]> {
+    return this.listPropertiesUseCase.execute(query);
   }
 
   @SwaggerDocs(PROPERTY_SCHEMA.get_property)
