@@ -1,0 +1,37 @@
+import { Controller, Get } from '@nestjs/common';
+import { GetDashboardMetricsUseCase } from './use-cases/get-dashboard-metrics/get.dashboard.metrics.usecase';
+import { GetClientsByStatusUseCase } from './use-cases/get-clients-by-status/get.clients.by.status.usecase';
+import { GetTopMunicipalityUseCase } from './use-cases/get-top-municipality/get.top.municipality.usecase';
+
+import { SwaggerDocs } from 'src/common/decorators/swagger.decorator';
+import { DASHBOARD_SCHEMA } from 'src/swagger/schema/dashboard.schema';
+import { DashboardMetrics } from './types/metrics.interface';
+import { ClientsByStatusItem } from './types/clients-by-status.interface';
+import { TopMunicipalityItem } from './types/top-municipality.interface';
+
+@Controller('dashboard')
+export class DashboardController {
+  constructor(
+    private readonly getDashboardMetricsUseCase: GetDashboardMetricsUseCase,
+    private readonly getClientsByStatusUseCase: GetClientsByStatusUseCase,
+    private readonly getTopMunicipalityUseCase: GetTopMunicipalityUseCase,
+  ) {}
+
+  @SwaggerDocs(DASHBOARD_SCHEMA.metrics)
+  @Get('metrics')
+  getMetrics(): Promise<DashboardMetrics> {
+    return this.getDashboardMetricsUseCase.execute();
+  }
+
+  @SwaggerDocs(DASHBOARD_SCHEMA.clients_by_status)
+  @Get('leads-by-status')
+  getLeadsByStatus(): Promise<ClientsByStatusItem[]> {
+    return this.getClientsByStatusUseCase.execute();
+  }
+
+  @SwaggerDocs(DASHBOARD_SCHEMA.top_municipality)
+  @Get('top-municipality')
+  getTopMunicipality(): Promise<TopMunicipalityItem[]> {
+    return this.getTopMunicipalityUseCase.execute();
+  }
+}
