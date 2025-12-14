@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Lead } from '../lead/lead.entity';
 import { Crop } from 'src/common/enums/crop';
+import { PropertyType } from 'src/common/enums/property-type';
 
 @Entity()
 export class Property {
@@ -24,6 +25,15 @@ export class Property {
   @Column({ type: 'uuid' })
   lead_id: string;
 
+  @Column({ type: 'text' })
+  name: string;
+
+  @Column({
+    type: 'enum',
+    enum: PropertyType,
+  })
+  property_type: PropertyType;
+
   @Column({
     type: 'enum',
     enum: Crop,
@@ -34,7 +44,7 @@ export class Property {
   area: number;
 
   @Column({ type: 'text', nullable: true })
-  geometry: string;
+  municipality: string;
 
   @CreateDateColumn()
   createdAt: Date;

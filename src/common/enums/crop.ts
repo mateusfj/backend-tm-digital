@@ -1,5 +1,5 @@
 export enum Crop {
-  SOY = 'soy',
-  CORN = 'corn',
-  COTTON = 'cotton',
+  SOY = 'SOY',
+  CORN = 'CORN',
+  COTTON = 'COTTON',
 }

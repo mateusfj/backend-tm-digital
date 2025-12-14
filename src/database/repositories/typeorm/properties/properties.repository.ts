@@ -25,7 +25,15 @@ export class PropertyRepository implements PropertyRepositoryInterface {
   }
 
   async findAll(): Promise<Property[]> {
-    const properties: Property[] = await this.propertyRepository.find();
+    const properties: Property[] = await this.propertyRepository.find({
+      relations: ['lead'],
+      select: {
+        lead: {
+          id: true,
+          name: true,
+        },
+      },
+    });
     return properties;
   }
 

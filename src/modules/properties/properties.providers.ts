@@ -7,19 +7,29 @@ import { ListPropertiesUseCase } from './use-cases/list-properties/list.properti
 import { ListPropertiesByLeadUseCase } from './use-cases/list-properties-by-lead/list.properties.by.lead.usecase';
 import { PROPERTY_REPOSITORY_INTERFACE } from 'src/database/repositories/typeorm/properties/properties.interface';
 import { Provider } from '@nestjs/common';
+import { LeadRepository } from 'src/database/repositories/typeorm/lead/lead.repository';
+import { LEAD_REPOSITORY_INTERFACE } from 'src/database/repositories/typeorm/lead/lead.interface';
 
 export const PROPERTIES_PROVIDERS: Provider[] = [
   PropertyRepository,
+  LeadRepository,
   {
     provide: PROPERTY_REPOSITORY_INTERFACE,
     useClass: PropertyRepository,
   },
   {
+    provide: LEAD_REPOSITORY_INTERFACE,
+    useClass: LeadRepository,
+  },
+  {
     provide: CreatePropertyUseCase,
-    useFactory: (propertyRepository: PropertyRepository) => {
-      return new CreatePropertyUseCase(propertyRepository);
+    useFactory: (
+      propertyRepository: PropertyRepository,
+      leadRepository: LeadRepository,
+    ) => {
+      return new CreatePropertyUseCase(propertyRepository, leadRepository);
     },
-    inject: [PROPERTY_REPOSITORY_INTERFACE],
+    inject: [PROPERTY_REPOSITORY_INTERFACE, LEAD_REPOSITORY_INTERFACE],
   },
   {
     provide: GetPropertyUseCase,

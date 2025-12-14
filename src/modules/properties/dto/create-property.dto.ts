@@ -8,6 +8,7 @@ import {
   IsUUID,
 } from 'class-validator';
 import { Crop } from 'src/common/enums/crop';
+import { PropertyType } from 'src/common/enums/property-type';
 
 export class CreatePropertyDto {
   @ApiProperty({
@@ -16,6 +17,21 @@ export class CreatePropertyDto {
   @IsUUID()
   @IsNotEmpty()
   lead_id: string;
+
+  @ApiProperty({
+    example: 'Fazenda Boa Vista',
+  })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({
+    example: 'COUNTRY_HOUSE',
+    enum: PropertyType,
+  })
+  @IsEnum(PropertyType)
+  @IsNotEmpty()
+  property_type: PropertyType;
 
   @ApiProperty({
     example: Crop.CORN,
@@ -33,12 +49,11 @@ export class CreatePropertyDto {
   area: number;
 
   @ApiProperty({
-    example: '{"type": "Polygon", "coordinates": [...]}',
-    required: false,
+    example: 'Teresina',
   })
   @IsString()
   @IsOptional()
-  geometry?: string;
+  municipality: string;
 }
 
 export class PropertyResponseDto {
@@ -58,14 +73,19 @@ export class PropertyResponseDto {
   crop: Crop;
 
   @ApiProperty({
+    example: 'Fazenda Boa Vista',
+  })
+  name: string;
+
+  @ApiProperty({
     example: 100.5,
   })
   area: number;
 
   @ApiProperty({
-    example: '{"type": "Polygon", "coordinates": [...]}',
+    example: 'Teresina',
   })
-  geometry?: string;
+  municipality: string;
 
   @ApiProperty({
     example: '2024-12-12T10:00:00Z',

@@ -1,7 +1,7 @@
 export enum LeadStatus {
-  NEW = 'new',
-  INITIAL_CONTACT = 'initial_contact',
-  NEGOTIATING = 'negotiating',
-  CONVERTED = 'converted',
-  LOST = 'lost',
+  NEW = 'NEW',
+  INITIAL_CONTACT = 'INITIAL_CONTACT',
+  NEGOTIATING = 'NEGOTIATING',
+  CONVERTED = 'CONVERTED',
+  LOST = 'LOST',
 }
