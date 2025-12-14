@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import type { PropertyRepositoryInterface } from 'src/database/repositories/typeorm/properties/properties.interface';
-import { TopMunicipalityItem } from '../../types/top-municipality.interface';
+
 import { Property } from 'src/database/repositories/typeorm/properties/properties.entity';
+import { TopMunicipalityItemDto } from '../../dto/top-municipality.dto';
 
 @Injectable()
 export class GetTopMunicipalityUseCase {
@@ -9,12 +10,12 @@ export class GetTopMunicipalityUseCase {
     private readonly propertyRepository: PropertyRepositoryInterface,
   ) {}
 
-  async execute(): Promise<TopMunicipalityItem[]> {
+  async execute(): Promise<TopMunicipalityItemDto[]> {
     const properties: Property[] = await this.propertyRepository.findAll();
     const counts = new Map<string, number>();
 
     for (const property of properties) {
-      const municipality = (property.municipality ?? '').trim();
+      const municipality: string = (property.municipality ?? '').trim();
       if (!municipality) continue;
       counts.set(municipality, (counts.get(municipality) ?? 0) + 1);
     }

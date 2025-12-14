@@ -23,18 +23,21 @@ export const DASHBOARD_PROVIDERS = [
     useFactory: (
       leadRepository: LeadRepository,
       propertyRepository: PropertyRepository,
-    ) => new GetDashboardMetricsUseCase(leadRepository, propertyRepository),
+    ): GetDashboardMetricsUseCase =>
+      new GetDashboardMetricsUseCase(leadRepository, propertyRepository),
     inject: [LEAD_REPOSITORY_INTERFACE, PROPERTY_REPOSITORY_INTERFACE],
   },
   {
     provide: GetClientsByStatusUseCase,
-    useFactory: (leadRepository: LeadRepository) =>
+    useFactory: (leadRepository: LeadRepository): GetClientsByStatusUseCase =>
       new GetClientsByStatusUseCase(leadRepository),
     inject: [LEAD_REPOSITORY_INTERFACE],
   },
   {
     provide: GetTopMunicipalityUseCase,
-    useFactory: (propertyRepository: PropertyRepository) =>
+    useFactory: (
+      propertyRepository: PropertyRepository,
+    ): GetTopMunicipalityUseCase =>
       new GetTopMunicipalityUseCase(propertyRepository),
     inject: [PROPERTY_REPOSITORY_INTERFACE],
   },

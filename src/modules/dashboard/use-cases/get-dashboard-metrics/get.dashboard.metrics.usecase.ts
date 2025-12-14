@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { LeadRepositoryInterface } from 'src/database/repositories/typeorm/lead/lead.interface';
 import type { PropertyRepositoryInterface } from 'src/database/repositories/typeorm/properties/properties.interface';
-import { DashboardMetrics } from '../../types/metrics.interface';
+import { DashboardMetricsDto } from '../../dto/metrics.dto';
 
 @Injectable()
 export class GetDashboardMetricsUseCase {
@@ -10,7 +10,7 @@ export class GetDashboardMetricsUseCase {
     private readonly propertyRepository: PropertyRepositoryInterface,
   ) {}
 
-  async execute(): Promise<DashboardMetrics> {
+  async execute(): Promise<DashboardMetricsDto> {
     const [leads, properties] = await Promise.all([
       this.leadRepository.findAll(),
       this.propertyRepository.findAll(),

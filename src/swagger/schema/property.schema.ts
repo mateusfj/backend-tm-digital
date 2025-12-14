@@ -3,6 +3,7 @@ import {
   CreatePropertyDto,
   PropertyResponseDto,
 } from 'src/modules/properties/dto/create-property.dto';
+import { DeletePropertyResponse } from 'src/modules/properties/dto/delete-property.dto';
 
 export const PROPERTY_SCHEMA = {
   create: {
@@ -41,7 +42,7 @@ export const PROPERTY_SCHEMA = {
       {
         status: 200,
         description: 'property deleted successfully',
-        type: String,
+        type: DeletePropertyResponse,
       },
     ],
   },

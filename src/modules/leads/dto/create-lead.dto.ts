@@ -6,30 +6,28 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import {
-  IsCPF,
-  IsMobilePhoneNumber,
-  IsValidName,
-} from 'src/common/decorators/validate.decorator';
 import { LeadStatus } from 'src/common/enums/lead-status';
 
 export class CreateLeadDto {
   @ApiProperty({
     example: 'John Doe',
   })
-  @IsValidName()
+  @IsString()
+  @IsNotEmpty()
   name: string;
 
   @ApiProperty({
-    example: '12345678900',
+    example: '123.456.789-00',
   })
-  @IsCPF()
+  @IsString()
+  @IsNotEmpty()
   cpf: string;
 
   @ApiProperty({
     example: '11999999999',
   })
-  @IsMobilePhoneNumber()
+  @IsString()
+  @IsNotEmpty()
   phone: string;
 
   @ApiProperty({
@@ -105,4 +103,19 @@ export class LeadResponseDto {
     example: 'New York',
   })
   city?: string;
+
+  @ApiProperty({
+    example: '2024-01-01T00:00:00.000Z',
+  })
+  created_at?: Date;
+
+  @ApiProperty({
+    example: '2024-01-02T00:00:00.000Z',
+  })
+  updated_at?: Date;
+
+  @ApiProperty({
+    example: null,
+  })
+  deleted_at?: Date;
 }

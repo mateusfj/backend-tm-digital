@@ -44,9 +44,7 @@ export class LeadRepository implements LeadRepositoryInterface {
       where.name = ILike(`%${query.search.trim()}%`);
     }
 
-    const leads: Lead[] = await this.leadRepository.find({ where });
-
-    return leads;
+    return this.leadRepository.find({ where });
   }
 
   async findOne(id: string): Promise<Lead> {

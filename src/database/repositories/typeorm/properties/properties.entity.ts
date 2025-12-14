@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Lead } from '../lead/lead.entity';
 import { Crop } from 'src/common/enums/crop';
@@ -47,8 +48,11 @@ export class Property {
   municipality: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at?: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at?: Date;
+
+  @DeleteDateColumn()
+  deleted_at?: Date;
 }

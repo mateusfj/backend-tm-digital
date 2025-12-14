@@ -1,5 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePropertyDto } from '../../dto/create-property.dto';
+import {
+  CreatePropertyDto,
+  PropertyResponseDto,
+} from '../../dto/create-property.dto';
 import { v4 as uuid } from 'uuid';
 import { Property } from 'src/database/repositories/typeorm/properties/properties.entity';
 import type { PropertyRepositoryInterface } from 'src/database/repositories/typeorm/properties/properties.interface';
@@ -13,7 +16,9 @@ export class CreatePropertyUseCase {
     private readonly leadRepository: LeadRepositoryInterface,
   ) {}
 
-  async execute(createPropertyDto: CreatePropertyDto): Promise<Property> {
+  async execute(
+    createPropertyDto: CreatePropertyDto,
+  ): Promise<PropertyResponseDto> {
     const userExists: Lead = await this.leadRepository.findOne(
       createPropertyDto.lead_id,
     );

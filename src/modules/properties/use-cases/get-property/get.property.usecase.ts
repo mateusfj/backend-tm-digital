@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Property } from 'src/database/repositories/typeorm/properties/properties.entity';
 import type { PropertyRepositoryInterface } from 'src/database/repositories/typeorm/properties/properties.interface';
+import { PropertyResponseDto } from '../../dto/create-property.dto';
 
 @Injectable()
 export class GetPropertyUseCase {
@@ -8,7 +8,7 @@ export class GetPropertyUseCase {
     private readonly propertyRepository: PropertyRepositoryInterface,
   ) {}
 
-  async execute(id: string): Promise<Property> {
+  async execute(id: string): Promise<PropertyResponseDto> {
     const property = await this.propertyRepository.findOne(id);
 
     if (!property) throw new NotFoundException('Property not found');

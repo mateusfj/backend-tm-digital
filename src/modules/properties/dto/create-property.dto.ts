@@ -78,6 +78,11 @@ export class PropertyResponseDto {
   name: string;
 
   @ApiProperty({
+    example: PropertyType.COUNTRY_HOUSE,
+  })
+  property_type: PropertyType;
+
+  @ApiProperty({
     example: 100.5,
   })
   area: number;
@@ -90,10 +95,15 @@ export class PropertyResponseDto {
   @ApiProperty({
     example: '2024-12-12T10:00:00Z',
   })
-  createdAt: Date;
+  created_at?: Date;
 
   @ApiProperty({
     example: '2024-12-12T10:00:00Z',
   })
-  updatedAt: Date;
+  updated_at?: Date;
+
+  @ApiProperty({
+    example: null,
+  })
+  deleted_at?: Date | null;
 }

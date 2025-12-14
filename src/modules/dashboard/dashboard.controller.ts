@@ -5,9 +5,9 @@ import { GetTopMunicipalityUseCase } from './use-cases/get-top-municipality/get.
 
 import { SwaggerDocs } from 'src/common/decorators/swagger.decorator';
 import { DASHBOARD_SCHEMA } from 'src/swagger/schema/dashboard.schema';
-import { DashboardMetrics } from './types/metrics.interface';
-import { ClientsByStatusItem } from './types/clients-by-status.interface';
-import { TopMunicipalityItem } from './types/top-municipality.interface';
+import { DashboardMetricsDto } from './dto/metrics.dto';
+import { LeadsByStatusItemDto } from './dto/leads-by-status.dto';
+import { TopMunicipalityItemDto } from './dto/top-municipality.dto';
 
 @Controller('dashboard')
 export class DashboardController {
@@ -19,19 +19,19 @@ export class DashboardController {
 
   @SwaggerDocs(DASHBOARD_SCHEMA.metrics)
   @Get('metrics')
-  getMetrics(): Promise<DashboardMetrics> {
+  getMetrics(): Promise<DashboardMetricsDto> {
     return this.getDashboardMetricsUseCase.execute();
   }
 
   @SwaggerDocs(DASHBOARD_SCHEMA.clients_by_status)
   @Get('leads-by-status')
-  getLeadsByStatus(): Promise<ClientsByStatusItem[]> {
+  getLeadsByStatus(): Promise<LeadsByStatusItemDto[]> {
     return this.getClientsByStatusUseCase.execute();
   }
 
   @SwaggerDocs(DASHBOARD_SCHEMA.top_municipality)
   @Get('top-municipality')
-  getTopMunicipality(): Promise<TopMunicipalityItem[]> {
+  getTopMunicipality(): Promise<TopMunicipalityItemDto[]> {
     return this.getTopMunicipalityUseCase.execute();
   }
 }

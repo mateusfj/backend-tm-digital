@@ -8,18 +8,18 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { CreateLeadDto } from './dto/create-lead.dto';
+import { CreateLeadDto, LeadResponseDto } from './dto/create-lead.dto';
 import { UpdateLeadDto } from './dto/update-lead.dto';
 import { CreateLeadUseCase } from './use-cases/create-lead/create.lead.usecase';
 import { GetLeadUseCase } from './use-cases/get-lead/get.lead.usecase';
 import { DeleteLeadUseCase } from './use-cases/delete-lead/delete.lead.usecase';
 import { UpdateLeadUseCase } from './use-cases/update-lead/update.lead.usecase';
 import { ListLeadsUseCase } from './use-cases/list-leads/list.leads.usecase';
-import { Lead } from 'src/database/repositories/typeorm/lead/lead.entity';
 import { LEAD_SCHEMA } from 'src/swagger/schema/lead.schema';
 import { SwaggerDocs } from 'src/common/decorators/swagger.decorator';
 import { Query } from '@nestjs/common';
 import { ListLeadsQueryDto } from './dto/list-leads.query.dto';
+import { DeleteLeadResponseDto } from './dto/delete-lead.dto';
 
 @Controller('leads')
 export class LeadsController {
@@ -33,19 +33,22 @@ export class LeadsController {
 
   @SwaggerDocs(LEAD_SCHEMA.create)
   @Post()
-  create(@Body() createLeadDto: CreateLeadDto): Promise<Lead> {
+  create(@Body() createLeadDto: CreateLeadDto): Promise<LeadResponseDto> {
+    console.log(createLeadDto);
     return this.createLeadUseCase.execute(createLeadDto);
   }
 
   @SwaggerDocs(LEAD_SCHEMA.list_leads)
   @Get()
-  findAll(@Query() query: ListLeadsQueryDto): Promise<Lead[]> {
+  findAll(@Query() query: ListLeadsQueryDto): Promise<LeadResponseDto[]> {
     return this.listLeadsUseCase.execute(query);
   }
 
   @SwaggerDocs(LEAD_SCHEMA.get_lead)
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe()) id: string): Promise<Lead> {
+  findOne(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<LeadResponseDto> {
     return this.getLeadUseCase.execute(id);
   }
 
@@ -54,13 +57,15 @@ export class LeadsController {
   update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateLeadDto: UpdateLeadDto,
-  ): Promise<Lead> {
+  ): Promise<LeadResponseDto> {
     return this.updateLeadUseCase.execute(id, updateLeadDto);
   }
 
   @SwaggerDocs(LEAD_SCHEMA.delete)
   @Delete(':id')
-  remove(@Param('id', new ParseUUIDPipe()) id: string): Promise<string> {
+  remove(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<DeleteLeadResponseDto> {
     return this.deleteLeadUseCase.execute(id);
   }
 }

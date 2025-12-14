@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdatePropertyDto } from '../../dto/update-property.dto';
 import type { PropertyRepositoryInterface } from 'src/database/repositories/typeorm/properties/properties.interface';
-import { Property } from 'src/database/repositories/typeorm/properties/properties.entity';
+import { PropertyResponseDto } from '../../dto/create-property.dto';
 
 @Injectable()
 export class UpdatePropertyUseCase {
@@ -12,7 +12,7 @@ export class UpdatePropertyUseCase {
   async execute(
     id: string,
     updatePropertyDto: UpdatePropertyDto,
-  ): Promise<Property> {
+  ): Promise<PropertyResponseDto> {
     const property = await this.propertyRepository.findOne(id);
 
     if (!property) throw new NotFoundException('Property not found');

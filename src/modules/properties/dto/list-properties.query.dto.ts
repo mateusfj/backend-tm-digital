@@ -16,6 +16,6 @@ export class ListPropertiesQueryDto {
   lead_id?: string;
 
   @IsOptional()
-  @IsUUID()
+  @IsString()
   municipality?: string;
 }

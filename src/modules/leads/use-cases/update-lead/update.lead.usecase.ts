@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateLeadDto } from '../../dto/update-lead.dto';
 import type { LeadRepositoryInterface } from 'src/database/repositories/typeorm/lead/lead.interface';
-import { Lead } from 'src/database/repositories/typeorm/lead/lead.entity';
+import { LeadResponseDto } from '../../dto/create-lead.dto';
 
 @Injectable()
 export class UpdateLeadUseCase {
   constructor(private readonly leadRepository: LeadRepositoryInterface) {}
 
-  async execute(id: string, updateLeadDto: UpdateLeadDto): Promise<Lead> {
+  async execute(
+    id: string,
+    updateLeadDto: UpdateLeadDto,
+  ): Promise<LeadResponseDto> {
     const lead = await this.leadRepository.findOne(id);
 
     if (!lead) throw new NotFoundException('Lead not found');

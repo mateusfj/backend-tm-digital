@@ -1,43 +1,43 @@
-import { ClientsByStatusItemDto } from 'src/modules/dashboard/dto/clients-by-status.dto';
+import { LeadsByStatusItemDto } from 'src/modules/dashboard/dto/leads-by-status.dto';
 import { DashboardMetricsDto } from 'src/modules/dashboard/dto/metrics.dto';
 import { TopMunicipalityItemDto } from 'src/modules/dashboard/dto/top-municipality.dto';
 
 export const DASHBOARD_SCHEMA = {
   metrics: {
     method: 'get' as const,
-    summary: 'Métricas do Dashboard',
+    summary: 'Dashboard Metrics',
     description:
-      'Retorna métricas agregadas para os cards do dashboard (leads, propriedades e municípios).',
+      'General dashboard metrics, including total leads and properties.',
     response: [
       {
         status: 200,
-        description: 'métricas retornadas com sucesso',
+        description: 'metrics returned successfully',
         type: DashboardMetricsDto,
       },
     ],
   },
   clients_by_status: {
     method: 'get' as const,
-    summary: 'Clientes por Status',
-    description: 'Total de clientes agrupados por status.',
+    summary: 'Leads by Status',
+    description: 'Total leads grouped by status.',
     response: [
       {
         status: 200,
-        description: 'clientes por status retornados com sucesso',
-        type: ClientsByStatusItemDto,
+        description: 'leads by status returned successfully',
+        type: LeadsByStatusItemDto,
         isArray: true,
       },
     ],
   },
   top_municipality: {
     method: 'get' as const,
-    summary: 'Top Municípios',
+    summary: 'Top Municipalities',
     description:
-      'Lista de municípios mais recorrentes (quantidade de propriedades cadastradas por município).',
+      'List of the most recurring municipalities (number of properties registered per municipality).',
     response: [
       {
         status: 200,
-        description: 'top municípios retornados com sucesso',
+        description: 'top municipalities returned successfully',
         type: TopMunicipalityItemDto,
         isArray: true,
       },

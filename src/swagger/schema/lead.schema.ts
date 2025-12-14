@@ -3,6 +3,7 @@ import {
   CreateLeadDto,
   LeadResponseDto,
 } from 'src/modules/leads/dto/create-lead.dto';
+import { DeleteLeadResponseDto } from 'src/modules/leads/dto/delete-lead.dto';
 
 export const LEAD_SCHEMA = {
   create: {
@@ -41,7 +42,7 @@ export const LEAD_SCHEMA = {
       {
         status: 200,
         description: 'lead deleted successfully',
-        type: String,
+        type: DeleteLeadResponseDto,
       },
     ],
   },

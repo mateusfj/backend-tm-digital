@@ -8,18 +8,21 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { CreatePropertyDto } from './dto/create-property.dto';
+import {
+  CreatePropertyDto,
+  PropertyResponseDto,
+} from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { CreatePropertyUseCase } from './use-cases/create-property/create.property.usecase';
 import { GetPropertyUseCase } from './use-cases/get-property/get.property.usecase';
 import { DeletePropertyUseCase } from './use-cases/delete-property/delete.property.usecase';
 import { UpdatePropertyUseCase } from './use-cases/update-property/update.property.usecase';
 import { ListPropertiesUseCase } from './use-cases/list-properties/list.properties.usecase';
-import { Property } from 'src/database/repositories/typeorm/properties/properties.entity';
 import { PROPERTY_SCHEMA } from 'src/swagger/schema/property.schema';
 import { SwaggerDocs } from 'src/common/decorators/swagger.decorator';
 import { Query } from '@nestjs/common';
 import { ListPropertiesQueryDto } from './dto/list-properties.query.dto';
+import { DeletePropertyResponse } from './dto/delete-property.dto';
 
 @Controller('properties')
 export class PropertiesController {
@@ -33,19 +36,25 @@ export class PropertiesController {
 
   @SwaggerDocs(PROPERTY_SCHEMA.create)
   @Post()
-  create(@Body() createPropertyDto: CreatePropertyDto): Promise<Property> {
+  create(
+    @Body() createPropertyDto: CreatePropertyDto,
+  ): Promise<PropertyResponseDto> {
     return this.createPropertyUseCase.execute(createPropertyDto);
   }
 
   @SwaggerDocs(PROPERTY_SCHEMA.list_properties)
   @Get()
-  findAll(@Query() query: ListPropertiesQueryDto): Promise<Property[]> {
+  findAll(
+    @Query() query: ListPropertiesQueryDto,
+  ): Promise<PropertyResponseDto[]> {
     return this.listPropertiesUseCase.execute(query);
   }
 
   @SwaggerDocs(PROPERTY_SCHEMA.get_property)
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe()) id: string): Promise<Property> {
+  findOne(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<PropertyResponseDto> {
     return this.getPropertyUseCase.execute(id);
   }
 
@@ -54,13 +63,15 @@ export class PropertiesController {
   update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updatePropertyDto: UpdatePropertyDto,
-  ): Promise<Property> {
+  ): Promise<PropertyResponseDto> {
     return this.updatePropertyUseCase.execute(id, updatePropertyDto);
   }
 
   @SwaggerDocs(PROPERTY_SCHEMA.delete)
   @Delete(':id')
-  remove(@Param('id', new ParseUUIDPipe()) id: string): Promise<string> {
+  remove(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<DeletePropertyResponse> {
     return this.deletePropertyUseCase.execute(id);
   }
 }
