@@ -85,55 +85,10 @@ Com as dependências instaladas, o `.env` configurado e o banco rodando, você p
 ### Ambiente de desenvolvimento (watch mode)
 
 ```bash
-npm run dev
-```
-
-ou, se preferir o script padrão do Nest:
-
-```bash
 npm run start:dev
 ```
 
-A aplicação deverá subir (por padrão) em `http://localhost:3000`.
-
-### Ambiente de produção (build + run)
-
-```bash
-npm run build
-npm run start:prod
-```
-
----
-
-## 6. Rodar testes
-
-```bash
-# testes unitários
-npm test
-
-# testes e2e
-npm run test:e2e
-
-# cobertura de testes
-npm run test:cov
-```
-
----
-
-## 7. Scripts principais disponíveis
-
-Alguns scripts úteis definidos no `package.json`:
-
-- `npm run dev` – inicia o servidor em modo desenvolvimento com watch
-- `npm run start` – inicia o servidor uma única vez (sem watch)
-- `npm run start:dev` – alternativa ao `dev`, também com watch
-- `npm run start:prod` – roda a versão buildada (é necessário `npm run build` antes)
-- `npm run lint` – roda ESLint
-- `npm test` – testes unitários
-- `npm run test:e2e` – testes end-to-end
-- `npm run test:cov` – relatório de cobertura
-
----
+A aplicação deverá subir (por padrão) em `http://localhost:3001`.
 
 ## Observações
 
