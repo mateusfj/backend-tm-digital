@@ -34,7 +34,6 @@ export class LeadsController {
   @SwaggerDocs(LEAD_SCHEMA.create)
   @Post()
   create(@Body() createLeadDto: CreateLeadDto): Promise<LeadResponseDto> {
-    console.log(createLeadDto);
     return this.createLeadUseCase.execute(createLeadDto);
   }
 

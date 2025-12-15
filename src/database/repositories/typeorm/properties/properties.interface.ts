@@ -4,6 +4,7 @@ import type { ListPropertiesQueryDto } from 'src/modules/properties/dto/list-pro
 
 export interface PropertyRepositoryInterface extends RepositoryInterface<Property> {
   findAllWithFilters(query: ListPropertiesQueryDto): Promise<Property[]>;
+  findAllByLeadId(leadId: string): Promise<Property[]>;
 }
 
 export const PROPERTY_REPOSITORY_INTERFACE: unique symbol = Symbol(

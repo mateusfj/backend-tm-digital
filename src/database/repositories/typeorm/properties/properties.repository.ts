@@ -63,6 +63,13 @@ export class PropertyRepository implements PropertyRepositoryInterface {
     return properties;
   }
 
+  async findAllByLeadId(leadId: string): Promise<Property[]> {
+    const properties: Property[] = await this.propertyRepository.find({
+      where: { lead_id: leadId },
+    });
+    return properties;
+  }
+
   async findOne(id: string): Promise<Property> {
     const property = await this.propertyRepository.findOne({ where: { id } });
     return property;
